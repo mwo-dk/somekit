@@ -10,11 +10,11 @@
         /// </summary>
         string ContentType { get; }
         /// <summary>
-        /// Serializes a given object <paramref name="@object"/> to a string
+        /// Serializes a given object <paramref name="payload"/> to a string
         /// </summary>
         /// <typeparam name="T">The type of object to serialize</typeparam>
-        /// <param name="object">The payload to serialize</param>
-        /// <returns>The payload <paramref name="@object"/> serialized as a string</returns>
-        string Serialize<T>(T @object);
+        /// <param name="payload">The payload to serialize</param>
+        /// <returns>The payload <paramref name="payload"/> serialized as a string</returns>
+        string Serialize<T>(T payload);
     }
 }

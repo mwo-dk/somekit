@@ -27,6 +27,7 @@ namespace SomeKit
 
         /// <inheritdoc/>
         public Uri BaseAddress { get; set; }
+        /// <inheritdoc/>
         public IHttpRequestHeaderCollection RequestHeaders { get; }
 
         #region Support services
