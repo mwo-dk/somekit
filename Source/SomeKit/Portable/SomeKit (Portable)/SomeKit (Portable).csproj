@@ -81,6 +81,9 @@
     <Compile Include="..\..\DotNet Core\SomeKit %28.Net Core%29\Serialization\Json\JsonPayloadSerializer.cs">
       <Link>Serialization\Json\JsonPayloadSerializer.cs</Link>
     </Compile>
+    <Compile Include="..\..\DotNet Core\SomeKit %28.Net Core%29\WindowsRestClient.cs">
+      <Link>WindowsRestClient.cs</Link>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
