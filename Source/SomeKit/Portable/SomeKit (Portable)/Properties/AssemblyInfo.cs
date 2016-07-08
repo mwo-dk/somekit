@@ -4,13 +4,13 @@ using System.Reflection;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("SomeKit (Portable)")]
+[assembly: AssemblyTitle("SomeKit")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("SomeKit (Portable)")]
-[assembly: AssemblyCopyright("Copyright ©  2016")]
-[assembly: AssemblyTrademark("")]
+[assembly: AssemblyCompany("mwo-dk")]
+[assembly: AssemblyProduct("SomeKit")]
+[assembly: AssemblyCopyright("Copyright ©mwo-dk  2016")]
+[assembly: AssemblyTrademark("mwo-dk")]
 [assembly: AssemblyCulture("")]
 [assembly: NeutralResourcesLanguage("en")]
 
