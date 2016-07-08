@@ -177,8 +177,7 @@ namespace SomeKit
             Action<Exception> errorHandler = null,
             HttpCompletionOption? httpCompletionOption = null,
             CancellationToken? cancellationToken = null,
-            Action cancellationHandler = null,
-            IEnumerable<Tuple<string,string>> additionalHeaders = null)
+            Action cancellationHandler = null)
         {
             using (var client = HttpClientFactory.Create())
             {
@@ -192,9 +191,9 @@ namespace SomeKit
                             Content = content
                         })
                     {
-                        if (additionalHeaders != null)
-                            foreach (var header in additionalHeaders)
-                                httpRequestMessage.WithHeader(header.Item1, header.Item2);
+                        if (RequestHeaders.Count > 0)
+                            foreach (var header in RequestHeaders)
+                                httpRequestMessage.WithHeader(header.Name, header.Value);
                         try
                         {
                             using (
@@ -233,8 +232,7 @@ namespace SomeKit
             Action<Exception> errorHandler = null,
             HttpCompletionOption? httpCompletionOption = null,
             CancellationToken? cancellationToken = null,
-            Action cancellationHandler = null,
-            IEnumerable<Tuple<string, string>> additionalHeaders = null)
+            Action cancellationHandler = null)
         {
             using (var client = HttpClientFactory.Create())
             {
@@ -247,9 +245,9 @@ namespace SomeKit
                             Content = content
                         })
                     {
-                        if (additionalHeaders != null)
-                            foreach (var header in additionalHeaders)
-                                httpRequestMessage.WithHeader(header.Item1, header.Item2);
+                        if (RequestHeaders.Count > 0)
+                            foreach (var header in RequestHeaders)
+                                httpRequestMessage.WithHeader(header.Name, header.Value);
                         try
                         {
                             using (
@@ -289,8 +287,7 @@ namespace SomeKit
             Action<Exception> errorHandler = null,
             HttpCompletionOption? httpCompletionOption = null,
             CancellationToken? cancellationToken = null,
-            Action cancellationHandler = null,
-            IEnumerable<Tuple<string, string>> additionalHeaders = null)
+            Action cancellationHandler = null)
         {
             using (var client = HttpClientFactory.Create())
             {
@@ -303,9 +300,9 @@ namespace SomeKit
                             Content = content
                         })
                     {
-                        if (additionalHeaders != null)
-                            foreach (var header in additionalHeaders)
-                                httpRequestMessage.WithHeader(header.Item1, header.Item2);
+                        if (RequestHeaders.Count > 0)
+                            foreach (var header in RequestHeaders)
+                                httpRequestMessage.WithHeader(header.Name, header.Value);
                         try
                         {
                             using (
@@ -338,17 +335,16 @@ namespace SomeKit
             Action<Exception> errorHandler = null,
             HttpCompletionOption? httpCompletionOption = null,
             CancellationToken? cancellationToken = null,
-            Action cancellationHandler = null,
-            IEnumerable<Tuple<string, string>> additionalHeaders = null)
+            Action cancellationHandler = null)
         {
             using (var client = HttpClientFactory.Create())
             {
                 using (
                     var httpRequestMessage = new HttpRequestMessage(method, new Uri(BaseAddress, relativeAddress)))
                 {
-                    if (additionalHeaders != null)
-                        foreach (var header in additionalHeaders)
-                            httpRequestMessage.WithHeader(header.Item1, header.Item2);
+                    if (RequestHeaders.Count > 0)
+                        foreach (var header in RequestHeaders)
+                            httpRequestMessage.WithHeader(header.Name, header.Value);
                     try
                     {
                         using (
