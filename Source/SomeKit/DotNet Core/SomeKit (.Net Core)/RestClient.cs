@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -15,6 +13,12 @@ namespace SomeKit
     /// </summary>
     public sealed class RestClient : IRestClient
     {
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="httpClientFactory">The <see cref="IHttpClientFactory"/> utilized to create <see cref="HttpClient"/>s</param>
+        /// <param name="payloadSerializer">The <see cref="IPayloadSerializer"/> used to serialize requests</param>
+        /// <param name="payloadDeserializer">The <see cref="IPayloadDeserializer"/> used to deserialize requests</param>
         public RestClient(IHttpClientFactory httpClientFactory,
             IPayloadSerializer payloadSerializer,
             IPayloadDeserializer payloadDeserializer)

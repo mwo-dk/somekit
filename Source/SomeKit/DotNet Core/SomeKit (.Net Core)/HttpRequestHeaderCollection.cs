@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace SomeKit
 {
@@ -17,15 +14,11 @@ namespace SomeKit
         }
 
         ///<inheritdoc/>
-        public int Count
-        {
-            get { return _innerCollection.Count; }
-        }
+        public int Count => _innerCollection.Count;
+
         ///<inheritdoc/>
-        public bool IsReadOnly
-        {
-            get { return false; }
-        }
+        public bool IsReadOnly => false;
+
         ///<inheritdoc/>
         public void Add(IHttpRequestHeader item)
         {

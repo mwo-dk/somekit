@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
-using System.Threading.Tasks;
+﻿using System.Net.Http;
 
 namespace SomeKit
 {
@@ -14,8 +10,7 @@ namespace SomeKit
         ///<inheritdoc/>
         public HttpClient Create()
         {
-            var clientHandler = new HttpClientHandler();
-            clientHandler.UseDefaultCredentials = true;
+            var clientHandler = new HttpClientHandler {UseDefaultCredentials = true};
             return new HttpClient(clientHandler);
         }
     }
