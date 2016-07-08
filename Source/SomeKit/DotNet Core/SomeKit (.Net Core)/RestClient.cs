@@ -11,7 +11,7 @@ namespace SomeKit
     /// <summary>
     /// Provides implementatin of <see cref="IRestClient"/>
     /// </summary>
-    public sealed class RestClient : IRestClient
+    public class RestClient : IRestClient
     {
         /// <summary>
         /// Constructor

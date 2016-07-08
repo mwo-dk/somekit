@@ -5,7 +5,7 @@ namespace SomeKit
     /// <summary>
     /// Implements <see cref="IHttpClientFactory"/>. Creates <see cref="HttpClient"/>s, that use Windows Authentication
     /// </summary>
-    public class HttpWindowsClientFactory
+    public class HttpWindowsClientFactory : IHttpClientFactory
     {
         ///<inheritdoc/>
         public HttpClient Create()
