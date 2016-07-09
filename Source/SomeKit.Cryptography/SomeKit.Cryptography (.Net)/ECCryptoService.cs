@@ -1,70 +1,82 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
-using SomeKit.Cryptography__.Net_;
 
 namespace SomeKit.Cryptography
 {
-    public sealed class ECCryptoService : IECCryptoService
+    /// <summary>
+    /// Implements <see cref="ICryptoService"/>
+    /// </summary>
+    public sealed class ECCryptoService : ICryptoService
     {
         private byte[] _privateKey;
         private byte[] _publicKey;
         private byte[] _peerPublicKey;
         private byte[] _key;
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="generateKey">Flag telling wether to generate keys</param>
         public ECCryptoService(bool generateKey = true)
         {
             if (generateKey)
             {
                 var cngKey = GenerateExportableKey();
-                this._privateKey = cngKey.Export(CngKeyBlobFormat.EccPrivateBlob);
-                this._publicKey = cngKey.Export(CngKeyBlobFormat.EccPublicBlob);
+                _privateKey = cngKey.Export(CngKeyBlobFormat.EccPrivateBlob);
+                _publicKey = cngKey.Export(CngKeyBlobFormat.EccPublicBlob);
             }
         }
 
+        /// <summary>
+        /// The private key
+        /// </summary>
         public byte[] PrivateKey
         {
-            get { return this._privateKey; }
+            get { return _privateKey; }
             set
             {
                 if (value == null)
                     throw new ArgumentNullException();
-                this._privateKey = value;
-                this.PublicKey = GetAlgoritm(this._privateKey).PublicKey.ToByteArray();
+                _privateKey = value;
+                PublicKey = GetAlgoritm(_privateKey).PublicKey.ToByteArray();
             }
         }
 
+        /// <summary>
+        /// The public key
+        /// </summary>
         public byte[] PublicKey
         {
-            get { return this._publicKey; }
+            get { return _publicKey; }
             set
             {
-                this._publicKey = value;
-                if (this._publicKey != null && this._peerPublicKey != null)
-                    this.AttachToPeer();
+                _publicKey = value;
+                if (_publicKey != null && _peerPublicKey != null)
+                    AttachToPeer();
             }
         }
 
+        /// <summary>
+        /// The public key of the peer
+        /// </summary>
         public byte[] PeerPublicKey
         {
-            get { return this._peerPublicKey; }
+            get { return _peerPublicKey; }
             set
             {
-                this._peerPublicKey = value;
-                if (this._publicKey != null && this._peerPublicKey != null)
-                    this.AttachToPeer();
+                _peerPublicKey = value;
+                if (_publicKey != null && _peerPublicKey != null)
+                    AttachToPeer();
             }
         }
 
-        public Tuple<byte[], byte[]> Encrypt(byte[] data)
+        ///<inheritdoc/>
+        public byte[] Encrypt(byte[] data)
         {
             using (Aes aes = new AesCryptoServiceProvider())
             {
-                aes.Key = this._key;
+                aes.Key = _key;
 
                 // Encrypt the message 
                 using (MemoryStream ciphertext = new MemoryStream())
@@ -72,17 +84,19 @@ namespace SomeKit.Cryptography
                 {
                     cs.Write(data, 0, data.Length);
                     cs.Close();
-                    return new Tuple<byte[], byte[]>(ciphertext.ToArray(), aes.IV);
+                    _iv = aes.IV;
+                    return ciphertext.ToArray();
                 }
             }
         }
 
-        public byte[] Decrypt(byte[] data, byte[] iv)
+        ///<inheritdoc/>
+        public byte[] Decrypt(byte[] data)
         {
             using (Aes aes = new AesCryptoServiceProvider())
             {
-                aes.Key = this._key;
-                aes.IV = iv;
+                aes.Key = _key;
+                aes.IV = _iv;
                 // Decrypt the message 
                 using (MemoryStream plaintext = new MemoryStream())
                 {
@@ -95,6 +109,23 @@ namespace SomeKit.Cryptography
                 }
             }
         }
+
+        private byte[] _iv;
+        /// <summary>
+        /// Sets the initialization vector
+        /// </summary>
+        /// <param name="iv">The new initialization vector</param>
+        /// <returns>This service</returns>
+        public ECCryptoService WithInitializationVector(byte[] iv)
+        {
+            if (iv == null)
+                throw new ArgumentNullException(nameof(iv));
+
+            _iv = iv;
+            return this;
+        }
+
+        ///<inheritdoc/>
         public static CngKey GenerateExportableKey()
         {
             return CngKey.Create(CngAlgorithm.ECDiffieHellmanP256, null,
@@ -103,9 +134,9 @@ namespace SomeKit.Cryptography
 
         private void AttachToPeer()
         {
-            using (var ecc = GetAlgoritm(this._privateKey))
+            using (var ecc = GetAlgoritm(_privateKey))
             {
-                this._key = ecc.DeriveKeyMaterial(CngKey.Import(this._peerPublicKey, CngKeyBlobFormat.EccPublicBlob));
+                _key = ecc.DeriveKeyMaterial(CngKey.Import(_peerPublicKey, CngKeyBlobFormat.EccPublicBlob));
             }
         }
 

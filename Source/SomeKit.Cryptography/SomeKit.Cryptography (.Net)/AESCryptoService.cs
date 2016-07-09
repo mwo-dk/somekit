@@ -1,95 +1,101 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SomeKit.Cryptography
 {
-    public sealed class AESCryptoService : IAESCryptoService
+    /// <summary>
+    /// Implements <see cref="ICryptoService"/>
+    /// </summary>
+    public sealed class AESCryptoService : ICryptoService
     {
         /// <summary>
-        /// AES encrypts data according to the password and salt given.
+        /// Constructor
         /// </summary>
-        /// <param name="dataToEncrypt">Unencrypted data.</param>
-        /// <param name="password">The password.</param>
-        /// <param name="salt">The salt.</param>
-        /// <returns>Encrypted data.</returns>
-        public static string Encrypt(string dataToEncrypt, string password, string salt)
+        /// <param name="password">The password to utilize</param>
+        /// <param name="salt">The salt to utilize</param>
+        /// <param name="iterations">The number of iterations for the hash generator - defaults to one</param>
+        public AESCryptoService(byte[] password,
+            byte[] salt,
+            int iterations)
         {
-            AesManaged aes = null;
-            MemoryStream memoryStream = null;
-            CryptoStream cryptoStream = null;
-            try
+            if (password == null)
+                throw new ArgumentNullException(nameof(password));
+            if (salt == null)
+                throw new ArgumentNullException(nameof(salt));
+            if (iterations < 1)
+                throw new ArgumentOutOfRangeException(nameof(iterations));
+
+            Password = password;
+            Salt = salt;
+            Iterations = iterations;
+        }
+
+        private byte[] Password { get; }
+        private byte[] Salt { get; }
+        private int Iterations { get; }
+
+        /// <summary>
+        /// Encrypts a given payload <paramref name="data"/> using the symmetric AES algorithm
+        /// </summary>
+        /// <param name="data">The data to encrypt</param>
+        /// <returns><paramref name="data"/> AES encrypted</returns>
+        public byte[] Encrypt(byte[] data)
+        {
+            if (data == null)
+                throw new ArgumentNullException(nameof(data));
+
+            // Generate a Key based on a Password, Salt and HMACSHA1 pseudo-random number generator 
+            using (var derivedBytes = new Rfc2898DeriveBytes(Password, Salt, Iterations))
             {
-                //Generate a Key based on a Password, Salt and HMACSHA1 pseudo-random number generator 
-                Rfc2898DeriveBytes rfc2898 = new Rfc2898DeriveBytes(password, Encoding.UTF8.GetBytes(salt));
-                //Create AES algorithm with 256 bit key and 128-bit block size 
-                aes = new AesManaged();
-                aes.Key = rfc2898.GetBytes(aes.KeySize / 8);
-                aes.IV = rfc2898.GetBytes(aes.BlockSize / 8);
-                //Create Memory and Crypto Streams 
-                memoryStream = new MemoryStream();
-                cryptoStream = new CryptoStream(memoryStream, aes.CreateEncryptor(), CryptoStreamMode.Write);
-                //Encrypt Data 
-                byte[] data = Encoding.UTF8.GetBytes(dataToEncrypt);
-                cryptoStream.Write(data, 0, data.Length);
-                cryptoStream.FlushFinalBlock();
-                //Return Base 64 String 
-                return Convert.ToBase64String(memoryStream.ToArray());
-            }
-            finally
-            {
-                if (cryptoStream != null)
-                    cryptoStream.Close();
-                if (memoryStream != null)
-                    memoryStream.Close();
-                if (aes != null)
-                    aes.Clear();
+                // Create AES algorithm with 256 bit key and 128-bit block size 
+                using (var aes = new AesManaged())
+                {
+                    aes.Key = derivedBytes.GetBytes(aes.KeySize / 8);
+                    aes.IV = derivedBytes.GetBytes(aes.BlockSize / 8);
+                    // Create Memory and Crypto Streams 
+                    using (var memoryStream = new MemoryStream())
+                    using (var transform = aes.CreateEncryptor())
+                    using (var cryptoStream = new CryptoStream(memoryStream, transform, CryptoStreamMode.Write))
+                    {
+                        // Encrypt data 
+                        cryptoStream.Write(data, 0, data.Length);
+                        cryptoStream.FlushFinalBlock();
+                        return memoryStream.ToArray();
+                    }
+                }
             }
         }
 
         /// <summary>
-        /// AES decrypts data according to the password and salt given.
+        /// Decrypts a given payload <paramref name="data"/> using the symmetric AES algorithm
         /// </summary>
-        /// <param name="dataToDecrypt">Encrypted data.</param>
-        /// <param name="password">The password.</param>
-        /// <param name="salt">The salt.</param>
-        /// <returns>Decrypted data.</returns>
-        public static string Decrypt(string dataToDecrypt, string password, string salt)
+        /// <param name="data">The data to decrypt</param>
+        /// <returns><paramref name="data"/> AES decrypted</returns>
+        public byte[] Decrypt(byte[] data)
         {
-            AesManaged aes = null;
-            MemoryStream memoryStream = null;
-            CryptoStream cryptoStream = null;
-            try
+            if (data == null)
+                throw new ArgumentNullException(nameof(data));
+
+            // Generate a Key based on a Password, Salt and HMACSHA1 pseudo-random number generator 
+            using (var derivedBytes = new Rfc2898DeriveBytes(Password, Salt, Iterations))
             {
-                //Generate a Key based on a Password, Salt and HMACSHA1 pseudo-random number generator 
-                Rfc2898DeriveBytes rfc2898 = new Rfc2898DeriveBytes(password, Encoding.UTF8.GetBytes(salt));
-                //Create AES algorithm with 256 bit key and 128-bit block size 
-                aes = new AesManaged();
-                aes.Key = rfc2898.GetBytes(aes.KeySize / 8);
-                aes.IV = rfc2898.GetBytes(aes.BlockSize / 8);
-                //Create Memory and Crypto Streams 
-                memoryStream = new MemoryStream();
-                cryptoStream = new CryptoStream(memoryStream, aes.CreateDecryptor(), CryptoStreamMode.Write);
-                //Decrypt Data 
-                byte[] data = Convert.FromBase64String(dataToDecrypt);
-                cryptoStream.Write(data, 0, data.Length);
-                cryptoStream.FlushFinalBlock();
-                //Return Decrypted String 
-                byte[] decryptBytes = memoryStream.ToArray();
-                return Encoding.UTF8.GetString(decryptBytes, 0, decryptBytes.Length);
-            }
-            finally
-            {
-                if (cryptoStream != null)
-                    cryptoStream.Close();
-                if (memoryStream != null)
-                    memoryStream.Close();
-                if (aes != null)
-                    aes.Clear();
+                // Create AES algorithm with 256 bit key and 128-bit block size 
+                using (var aes = new AesManaged())
+                {
+                    aes.Key = derivedBytes.GetBytes(aes.KeySize / 8);
+                    aes.IV = derivedBytes.GetBytes(aes.BlockSize / 8);
+                    // Create Memory and Crypto Streams 
+                    using (var memoryStream = new MemoryStream())
+                    using (var transform = aes.CreateDecryptor())
+                    using (var cryptoStream = new CryptoStream(memoryStream, transform, CryptoStreamMode.Write))
+                    {
+                        // Encrypt data 
+                        cryptoStream.Write(data, 0, data.Length);
+                        cryptoStream.FlushFinalBlock();
+                        return memoryStream.ToArray();
+                    }
+                }
             }
         }
     }
