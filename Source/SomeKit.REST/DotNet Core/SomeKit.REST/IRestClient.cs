@@ -37,52 +37,11 @@ namespace SomeKit.REST
         /// </param>
         /// <param name="httpCompletionOption">Optional <see cref="HttpCompletionOption" /></param>
         /// <returns>The resource</returns>
-        Task<T> GetAsync<T>(Uri relativeAddress,
+        Task<T> GetAsync<T>(string relativeAddress,
             Action<Exception> errorHandler = null,
             CancellationToken? cancellationToken = null,
             Action cancellationHandler = null,
             HttpCompletionOption? httpCompletionOption = null);
-
-        #endregion
-
-        #region Delete
-
-        /// <summary>
-        ///     Invokes a DELETE request
-        /// </summary>
-        /// <param name="relativeAddress">The relative address of the resource</param>
-        /// <param name="errorHandler">Optional error handler. If this is provided, errors will not be propagated</param>
-        /// <param name="cancellationToken">Optional <see cref="CancellationToken" /></param>
-        /// <param name="cancellationHandler">
-        ///     Optional cancellation handler. If this is provided, cancelletion exceptions will not
-        ///     be propagated
-        /// </param>
-        /// <param name="httpCompletionOption">Optional <see cref="HttpCompletionOption" /></param>
-        /// <returns>An awaitable task</returns>
-        Task DeleteAsync(Uri relativeAddress,
-            Action<Exception> errorHandler = null,
-            CancellationToken? cancellationToken = null,
-            Action cancellationHandler = null,
-            HttpCompletionOption? httpCompletionOption = null);
-
-        #endregion
-
-        #region Support services
-
-        /// <summary>
-        ///     <see cref="IHttpClientFactory" /> utilized to create <see cref="HttpClient" />s
-        /// </summary>
-        IHttpClientFactory HttpClientFactory { get; set; }
-
-        /// <summary>
-        ///     <see cref="IPayloadSerializer" /> utilized to serialize payload
-        /// </summary>
-        IPayloadSerializer PayloadSerializer { get; set; }
-
-        /// <summary>
-        ///     <see cref="IPayloadDeserializer" /> utilized to deserialize return payload
-        /// </summary>
-        IPayloadDeserializer PayloadDeserializer { get; set; }
 
         #endregion
 
@@ -103,7 +62,7 @@ namespace SomeKit.REST
         /// </param>
         /// <param name="httpCompletionOption">Optional <see cref="HttpCompletionOption" /></param>
         /// <returns>The newly created resource</returns>
-        Task<RESPONSE> PostAsync<REQUEST, RESPONSE>(Uri relativeAddress,
+        Task<RESPONSE> PostAsync<REQUEST, RESPONSE>(string relativeAddress,
             REQUEST request,
             Action<Exception> errorHandler = null,
             CancellationToken? cancellationToken = null,
@@ -123,7 +82,7 @@ namespace SomeKit.REST
         /// </param>
         /// <param name="httpCompletionOption">Optional <see cref="HttpCompletionOption" /></param>
         /// <returns>The newly created resource</returns>
-        Task<RESPONSE> PostAsync<RESPONSE>(Uri relativeAddress,
+        Task<RESPONSE> PostAsync<RESPONSE>(string relativeAddress,
             Action<Exception> errorHandler = null,
             CancellationToken? cancellationToken = null,
             Action cancellationHandler = null,
@@ -143,7 +102,7 @@ namespace SomeKit.REST
         /// </param>
         /// <param name="httpCompletionOption">Optional <see cref="HttpCompletionOption" /></param>
         /// <returns>An awaitable task</returns>
-        Task PostAsync<REQUEST>(Uri relativeAddress,
+        Task PostAsync<REQUEST>(string relativeAddress,
             REQUEST request,
             Action<Exception> errorHandler = null,
             CancellationToken? cancellationToken = null,
@@ -169,7 +128,7 @@ namespace SomeKit.REST
         /// </param>
         /// <param name="httpCompletionOption">Optional <see cref="HttpCompletionOption" /></param>
         /// <returns>The replaced resource</returns>
-        Task<RESPONSE> PutAsync<REQUEST, RESPONSE>(Uri relativeAddress,
+        Task<RESPONSE> PutAsync<REQUEST, RESPONSE>(string relativeAddress,
             REQUEST request,
             Action<Exception> errorHandler = null,
             CancellationToken? cancellationToken = null,
@@ -189,7 +148,7 @@ namespace SomeKit.REST
         /// </param>
         /// <param name="httpCompletionOption">Optional <see cref="HttpCompletionOption" /></param>
         /// <returns>The replaced resource</returns>
-        Task<RESPONSE> PutAsync<RESPONSE>(Uri relativeAddress,
+        Task<RESPONSE> PutAsync<RESPONSE>(string relativeAddress,
             Action<Exception> errorHandler = null,
             CancellationToken? cancellationToken = null,
             Action cancellationHandler = null,
@@ -209,8 +168,30 @@ namespace SomeKit.REST
         /// </param>
         /// <param name="httpCompletionOption">Optional <see cref="HttpCompletionOption" /></param>
         /// <returns>An awaitable task</returns>
-        Task PutAsync<REQUEST>(Uri relativeAddress,
+        Task PutAsync<REQUEST>(string relativeAddress,
             REQUEST request,
+            Action<Exception> errorHandler = null,
+            CancellationToken? cancellationToken = null,
+            Action cancellationHandler = null,
+            HttpCompletionOption? httpCompletionOption = null);
+
+        #endregion
+
+        #region Delete
+
+        /// <summary>
+        ///     Invokes a DELETE request
+        /// </summary>
+        /// <param name="relativeAddress">The relative address of the resource</param>
+        /// <param name="errorHandler">Optional error handler. If this is provided, errors will not be propagated</param>
+        /// <param name="cancellationToken">Optional <see cref="CancellationToken" /></param>
+        /// <param name="cancellationHandler">
+        ///     Optional cancellation handler. If this is provided, cancelletion exceptions will not
+        ///     be propagated
+        /// </param>
+        /// <param name="httpCompletionOption">Optional <see cref="HttpCompletionOption" /></param>
+        /// <returns>An awaitable task</returns>
+        Task DeleteAsync(string relativeAddress,
             Action<Exception> errorHandler = null,
             CancellationToken? cancellationToken = null,
             Action cancellationHandler = null,

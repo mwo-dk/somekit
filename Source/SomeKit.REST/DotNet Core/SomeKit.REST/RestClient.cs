@@ -1,10 +1,10 @@
-﻿using System;
+﻿using SomeKit.REST.Extensions;
+using SomeKit.REST.Serialization.Json;
+using System;
 using System.Net.Http;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using SomeKit.REST.Extensions;
-using SomeKit.REST.Serialization.Json;
 
 namespace SomeKit.REST
 {
@@ -35,10 +35,29 @@ namespace SomeKit.REST
         /// <inheritdoc />
         public IHttpRequestHeaderCollection RequestHeaders { get; }
 
+        #region Support services
+
+        /// <summary>
+        ///     <see cref="IHttpClientFactory" /> utilized to create <see cref="HttpClient" />s
+        /// </summary>
+        public IHttpClientFactory HttpClientFactory { get; set; }
+
+        /// <summary>
+        ///     <see cref="IPayloadSerializer" /> utilized to serialize payload
+        /// </summary>
+        public IPayloadSerializer PayloadSerializer { get; set; }
+
+        /// <summary>
+        ///     <see cref="IPayloadDeserializer" /> utilized to deserialize return payload
+        /// </summary>
+        public IPayloadDeserializer PayloadDeserializer { get; set; }
+
+        #endregion
+
         #region Get
 
         /// <inheritdoc />
-        public async Task<T> GetAsync<T>(Uri relativeAddress,
+        public async Task<T> GetAsync<T>(string relativeAddress,
             Action<Exception> errorHandler = null,
             CancellationToken? cancellationToken = null,
             Action cancellationHandler = null,
@@ -53,43 +72,11 @@ namespace SomeKit.REST
         }
 
         #endregion
-
-        #region Delete
-
-        /// <inheritdoc />
-        public async Task DeleteAsync(Uri relativeAddress,
-            Action<Exception> errorHandler = null,
-            CancellationToken? cancellationToken = null,
-            Action cancellationHandler = null,
-            HttpCompletionOption? httpCompletionOption = null)
-        {
-            if (relativeAddress == null)
-                throw new ArgumentNullException(nameof(relativeAddress));
-
-            await InvokeAsync(relativeAddress, HttpMethod.Delete, errorHandler, httpCompletionOption,
-                cancellationToken, cancellationHandler)
-                .ConfigureAwait(false);
-        }
-
-        #endregion
-
-        #region Support services
-
-        /// <inheritdoc />
-        public IHttpClientFactory HttpClientFactory { get; set; }
-
-        /// <inheritdoc />
-        public IPayloadSerializer PayloadSerializer { get; set; }
-
-        /// <inheritdoc />
-        public IPayloadDeserializer PayloadDeserializer { get; set; }
-
-        #endregion
-
+        
         #region Post
 
         /// <inheritdoc />
-        public async Task<TResponse> PostAsync<TRequest, TResponse>(Uri relativeAddress,
+        public async Task<TResponse> PostAsync<TRequest, TResponse>(string relativeAddress,
             TRequest request,
             Action<Exception> errorHandler = null,
             CancellationToken? cancellationToken = null,
@@ -107,7 +94,7 @@ namespace SomeKit.REST
         }
 
         /// <inheritdoc />
-        public async Task<TResponse> PostAsync<TResponse>(Uri relativeAddress,
+        public async Task<TResponse> PostAsync<TResponse>(string relativeAddress,
             Action<Exception> errorHandler = null,
             CancellationToken? cancellationToken = null,
             Action cancellationHandler = null,
@@ -122,7 +109,7 @@ namespace SomeKit.REST
         }
 
         /// <inheritdoc />
-        public async Task PostAsync<TRequest>(Uri relativeAddress,
+        public async Task PostAsync<TRequest>(string relativeAddress,
             TRequest request,
             Action<Exception> errorHandler = null,
             CancellationToken? cancellationToken = null,
@@ -142,7 +129,7 @@ namespace SomeKit.REST
         #region Put
 
         /// <inheritdoc />
-        public async Task<TResponse> PutAsync<TRequest, TResponse>(Uri relativeAddress,
+        public async Task<TResponse> PutAsync<TRequest, TResponse>(string relativeAddress,
             TRequest request,
             Action<Exception> errorHandler = null,
             CancellationToken? cancellationToken = null,
@@ -160,7 +147,7 @@ namespace SomeKit.REST
         }
 
         /// <inheritdoc />
-        public async Task<TResponse> PutAsync<TResponse>(Uri relativeAddress,
+        public async Task<TResponse> PutAsync<TResponse>(string relativeAddress,
             Action<Exception> errorHandler = null,
             CancellationToken? cancellationToken = null,
             Action cancellationHandler = null,
@@ -175,7 +162,7 @@ namespace SomeKit.REST
         }
 
         /// <inheritdoc />
-        public async Task PutAsync<TRequest>(Uri relativeAddress,
+        public async Task PutAsync<TRequest>(string relativeAddress,
             TRequest request,
             Action<Exception> errorHandler = null,
             CancellationToken? cancellationToken = null,
@@ -192,9 +179,28 @@ namespace SomeKit.REST
 
         #endregion
 
+        #region Delete
+
+        /// <inheritdoc />
+        public async Task DeleteAsync(string relativeAddress,
+            Action<Exception> errorHandler = null,
+            CancellationToken? cancellationToken = null,
+            Action cancellationHandler = null,
+            HttpCompletionOption? httpCompletionOption = null)
+        {
+            if (relativeAddress == null)
+                throw new ArgumentNullException(nameof(relativeAddress));
+
+            await InvokeAsync(relativeAddress, HttpMethod.Delete, errorHandler, httpCompletionOption,
+                cancellationToken, cancellationHandler)
+                .ConfigureAwait(false);
+        }
+
+        #endregion
+
         #region Implementation
 
-        private async Task<TResponse> InvokeAsync<TRequest, TResponse>(Uri relativeAddress,
+        private async Task<TResponse> InvokeAsync<TRequest, TResponse>(string relativeAddress,
             HttpMethod method,
             TRequest request,
             Action<Exception> errorHandler = null,
@@ -250,7 +256,7 @@ namespace SomeKit.REST
             }
         }
 
-        private async Task<TResponse> InvokeAsync<TResponse>(Uri relativeAddress,
+        private async Task<TResponse> InvokeAsync<TResponse>(string relativeAddress,
             HttpMethod method,
             Action<Exception> errorHandler = null,
             HttpCompletionOption? httpCompletionOption = null,
@@ -303,7 +309,7 @@ namespace SomeKit.REST
             }
         }
 
-        private async Task InvokeAsync<TRequest>(Uri relativeAddress,
+        private async Task InvokeAsync<TRequest>(string relativeAddress,
             HttpMethod method,
             TRequest request,
             Action<Exception> errorHandler = null,
@@ -353,7 +359,7 @@ namespace SomeKit.REST
             }
         }
 
-        private async Task InvokeAsync(Uri relativeAddress,
+        private async Task InvokeAsync(string relativeAddress,
             HttpMethod method,
             Action<Exception> errorHandler = null,
             HttpCompletionOption? httpCompletionOption = null,
