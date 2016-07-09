@@ -3,13 +3,14 @@
 namespace SomeKit.REST.Serialization.Json
 {
     /// <summary>
-    /// Implements <see cref="IPayloadSerializer"/> for Json
+    ///     Implements <see cref="IPayloadSerializer" /> for Json
     /// </summary>
     public sealed class JsonPayloadSerializer : IPayloadSerializer
     {
-        ///<inheritdoc/>
+        /// <inheritdoc />
         public string ContentType => "application/json";
-        ///<inheritdoc/>
+
+        /// <inheritdoc />
         public string Serialize<T>(T @object)
         {
             return JsonConvert.SerializeObject(@object);

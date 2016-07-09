@@ -4,15 +4,16 @@ using System.Net.Http;
 namespace SomeKit.REST.Extensions
 {
     /// <summary>
-    /// Extension methods for <see cref="HttpRequestMessage"/>
+    ///     Extension methods for <see cref="HttpRequestMessage" />
     /// </summary>
     public static class HttpRequestMessageExtensions
     {
         /// <summary>
-        /// Extension method that adds an HTTP request header of name <paramref name="name"/> and name <paramref name="value"/>
-        /// to <paramref name="request"/>
+        ///     Extension method that adds an HTTP request header of name <paramref name="name" /> and name
+        ///     <paramref name="value" />
+        ///     to <paramref name="request" />
         /// </summary>
-        /// <param name="request">The <see cref="HttpRequestMessage"/> to which the HTTP request header should be added</param>
+        /// <param name="request">The <see cref="HttpRequestMessage" /> to which the HTTP request header should be added</param>
         /// <param name="name">The name of the HTTP request header</param>
         /// <param name="value">The value of the HTTP request header</param>
         /// <returns></returns>

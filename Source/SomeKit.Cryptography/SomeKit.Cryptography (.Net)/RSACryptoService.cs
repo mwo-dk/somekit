@@ -4,20 +4,19 @@ using System.Security.Cryptography;
 namespace SomeKit.Cryptography
 {
     /// <summary>
-    /// Implaments <see cref="ICryptoService"/>
+    ///     Implaments <see cref="ICryptoService" />
     /// </summary>
-    public sealed class RSACryptoService : 
+    public sealed class RsaCryptoService :
         ICryptoService,
         ISigningService
     {
         private byte[] _privateKey;
-        private byte[] _publicKey;
 
         /// <summary>
-        /// Constructor
+        ///     Constructor
         /// </summary>
         /// <param name="generateKey">Flag telling whether to auto-generate the keys</param>
-        public RSACryptoService(bool generateKey = true)
+        public RsaCryptoService(bool generateKey = true)
         {
             if (!generateKey)
                 return;
@@ -25,10 +24,11 @@ namespace SomeKit.Cryptography
             using (var rsaCrypto = new RSACryptoServiceProvider())
             {
                 _privateKey = rsaCrypto.ExportCspBlob(true);
-                _publicKey = rsaCrypto.ExportCspBlob(false);
+                PublicKey = rsaCrypto.ExportCspBlob(false);
             }
         }
-        ///<inheritdoc/>
+
+        /// <inheritdoc />
         public byte[] PrivateKey
         {
             get { return _privateKey; }
@@ -40,66 +40,71 @@ namespace SomeKit.Cryptography
                 {
                     rsaCrypto.ImportCspBlob(value);
                     _privateKey = rsaCrypto.ExportCspBlob(true);
-                    _publicKey = rsaCrypto.ExportCspBlob(false);
+                    PublicKey = rsaCrypto.ExportCspBlob(false);
                 }
             }
         }
-        ///<inheritdoc/>
-        public byte[] PublicKey { get { return _publicKey; } set { _publicKey = value; } }
-        ///<inheritdoc/>
+
+        /// <inheritdoc />
+        public byte[] PublicKey { get; set; }
+
+        /// <inheritdoc />
         public byte[] Encrypt(byte[] data)
         {
-            using (var rsaCSP = new RSACryptoServiceProvider())
+            using (var rsaCsp = new RSACryptoServiceProvider())
             {
-                rsaCSP.ImportCspBlob(_publicKey);
-                return rsaCSP.Encrypt(data, false);
+                rsaCsp.ImportCspBlob(PublicKey);
+                return rsaCsp.Encrypt(data, false);
             }
         }
-        ///<inheritdoc/>
+
+        /// <inheritdoc />
         public byte[] Decrypt(byte[] encryptedData)
         {
-            using (var rsaCSP = new RSACryptoServiceProvider())
+            using (var rsaCsp = new RSACryptoServiceProvider())
             {
-                rsaCSP.ImportCspBlob(_privateKey);
-                return rsaCSP.Decrypt(encryptedData, false);
+                rsaCsp.ImportCspBlob(_privateKey);
+                return rsaCsp.Decrypt(encryptedData, false);
             }
         }
-        ///<inheritdoc/>
+
+        /// <inheritdoc />
         public byte[] HashAndSign(byte[] data)
         {
-            using (var rsaCSP = new RSACryptoServiceProvider())
+            using (var rsaCsp = new RSACryptoServiceProvider())
             {
                 using (var hash = new SHA384Managed())
                 {
-                    rsaCSP.ImportCspBlob(_privateKey);
+                    rsaCsp.ImportCspBlob(_privateKey);
                     var hashedData = hash.ComputeHash(data);
-                    return rsaCSP.SignHash(hashedData, CryptoConfig.MapNameToOID("SHA384"));
+                    return rsaCsp.SignHash(hashedData, CryptoConfig.MapNameToOID("SHA384"));
                 }
             }
         }
+
         /// <summary>
-        /// Verifies whether the payload <paramref name="signedData"/> is signed with the provided signature (<paramref name="signature"/>)
+        ///     Verifies whether the payload <paramref name="signedData" /> is signed with the provided signature (
+        ///     <paramref name="signature" />)
         /// </summary>
         /// <param name="signedData">The payload to verify</param>
         /// <param name="signature">The signature to verify against</param>
         public void VerifySignedData(byte[] signedData, byte[] signature)
         {
-            using (var rsaCSP = new RSACryptoServiceProvider())
+            using (var rsaCsp = new RSACryptoServiceProvider())
             using (var hash = new SHA384Managed())
             {
-
-                rsaCSP.ImportCspBlob(_publicKey);
-                bool dataOk = rsaCSP.VerifyData(signedData, CryptoConfig.MapNameToOID("SHA384"), signature);
+                rsaCsp.ImportCspBlob(PublicKey);
+                bool dataOk = rsaCsp.VerifyData(signedData, CryptoConfig.MapNameToOID("SHA384"), signature);
                 if (!dataOk)
                     throw new Exception("Data validity could not be verified.");
                 var hashedData = hash.ComputeHash(signedData);
-                bool hashOk = rsaCSP.VerifyHash(hashedData, CryptoConfig.MapNameToOID("SHA384"), signature);
+                bool hashOk = rsaCsp.VerifyHash(hashedData, CryptoConfig.MapNameToOID("SHA384"), signature);
                 if (!hashOk)
                     throw new Exception("Signature validity could not be verified.");
             }
         }
 
-        ///<inheritdoc/>
+        /// <inheritdoc />
         public void ImportXml(string rsaCryptoServiceAsXml)
         {
             using (var rsaCrypto = new RSACryptoServiceProvider())
@@ -108,12 +113,13 @@ namespace SomeKit.Cryptography
                 PrivateKey = rsaCrypto.ExportCspBlob(true);
             }
         }
-        ///<inheritdoc/>
+
+        /// <inheritdoc />
         public string ExportXml(bool includePrivateKey)
         {
             using (var rsaCrypto = new RSACryptoServiceProvider())
             {
-                rsaCrypto.ImportCspBlob(includePrivateKey ? _privateKey : _publicKey);
+                rsaCrypto.ImportCspBlob(includePrivateKey ? _privateKey : PublicKey);
                 return rsaCrypto.ToXmlString(includePrivateKey);
             }
         }

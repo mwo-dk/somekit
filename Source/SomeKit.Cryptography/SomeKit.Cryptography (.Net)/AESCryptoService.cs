@@ -5,17 +5,17 @@ using System.Security.Cryptography;
 namespace SomeKit.Cryptography
 {
     /// <summary>
-    /// Implements <see cref="ICryptoService"/>
+    ///     Implements <see cref="ICryptoService" />
     /// </summary>
-    public sealed class AESCryptoService : ICryptoService
+    public sealed class AesCryptoService : ICryptoService
     {
         /// <summary>
-        /// Constructor
+        ///     Constructor
         /// </summary>
         /// <param name="password">The password to utilize</param>
         /// <param name="salt">The salt to utilize</param>
         /// <param name="iterations">The number of iterations for the hash generator - defaults to one</param>
-        public AESCryptoService(byte[] password,
+        public AesCryptoService(byte[] password,
             byte[] salt,
             int iterations)
         {
@@ -36,10 +36,10 @@ namespace SomeKit.Cryptography
         private int Iterations { get; }
 
         /// <summary>
-        /// Encrypts a given payload <paramref name="data"/> using the symmetric AES algorithm
+        ///     Encrypts a given payload <paramref name="data" /> using the symmetric AES algorithm
         /// </summary>
         /// <param name="data">The data to encrypt</param>
-        /// <returns><paramref name="data"/> AES encrypted</returns>
+        /// <returns><paramref name="data" /> AES encrypted</returns>
         public byte[] Encrypt(byte[] data)
         {
             if (data == null)
@@ -51,8 +51,8 @@ namespace SomeKit.Cryptography
                 // Create AES algorithm with 256 bit key and 128-bit block size 
                 using (var aes = new AesManaged())
                 {
-                    aes.Key = derivedBytes.GetBytes(aes.KeySize / 8);
-                    aes.IV = derivedBytes.GetBytes(aes.BlockSize / 8);
+                    aes.Key = derivedBytes.GetBytes(aes.KeySize/8);
+                    aes.IV = derivedBytes.GetBytes(aes.BlockSize/8);
                     // Create Memory and Crypto Streams 
                     using (var memoryStream = new MemoryStream())
                     using (var transform = aes.CreateEncryptor())
@@ -68,10 +68,10 @@ namespace SomeKit.Cryptography
         }
 
         /// <summary>
-        /// Decrypts a given payload <paramref name="data"/> using the symmetric AES algorithm
+        ///     Decrypts a given payload <paramref name="data" /> using the symmetric AES algorithm
         /// </summary>
         /// <param name="data">The data to decrypt</param>
-        /// <returns><paramref name="data"/> AES decrypted</returns>
+        /// <returns><paramref name="data" /> AES decrypted</returns>
         public byte[] Decrypt(byte[] data)
         {
             if (data == null)
@@ -83,8 +83,8 @@ namespace SomeKit.Cryptography
                 // Create AES algorithm with 256 bit key and 128-bit block size 
                 using (var aes = new AesManaged())
                 {
-                    aes.Key = derivedBytes.GetBytes(aes.KeySize / 8);
-                    aes.IV = derivedBytes.GetBytes(aes.BlockSize / 8);
+                    aes.Key = derivedBytes.GetBytes(aes.KeySize/8);
+                    aes.IV = derivedBytes.GetBytes(aes.BlockSize/8);
                     // Create Memory and Crypto Streams 
                     using (var memoryStream = new MemoryStream())
                     using (var transform = aes.CreateDecryptor())

@@ -1,11 +1,12 @@
 ﻿namespace SomeKit.REST
 {
-    /// <inheritdoc/>
+    /// <inheritdoc />
     public sealed class HttpRequestHeader : IHttpRequestHeader
     {
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public string Name { get; set; }
-        /// <inheritdoc/>
+
+        /// <inheritdoc />
         public string Value { get; set; }
     }
 }

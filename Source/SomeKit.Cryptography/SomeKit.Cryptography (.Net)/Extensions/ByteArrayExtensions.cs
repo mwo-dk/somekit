@@ -3,15 +3,15 @@
 namespace SomeKit.Cryptography.Extensions
 {
     /// <summary>
-    /// Extension methods for byte arrays
+    ///     Extension methods for byte arrays
     /// </summary>
     public static class ByteArrayExtensions
     {
         /// <summary>
-        /// Converts a given payload to a BASE 64 string
+        ///     Converts a given payload to a BASE 64 string
         /// </summary>
         /// <param name="data">The data to convert</param>
-        /// <returns><paramref name="data"/> as a BASE 64 encoded string</returns>
+        /// <returns><paramref name="data" /> as a BASE 64 encoded string</returns>
         public static string ToBase64(this byte[] data)
         {
             if (data == null)
@@ -21,7 +21,7 @@ namespace SomeKit.Cryptography.Extensions
         }
 
         /// <summary>
-        /// Converts a given payload from a BASE 64 string format to original byte array
+        ///     Converts a given payload from a BASE 64 string format to original byte array
         /// </summary>
         /// <param name="data">The data represented as a BASE 64 encoded string</param>
         /// <returns>Data as a raw byte array</returns>
@@ -34,18 +34,18 @@ namespace SomeKit.Cryptography.Extensions
         }
 
         /// <summary>
-        /// In place reverses a the payload <paramref name="data"/>
+        ///     In place reverses a the payload <paramref name="data" />
         /// </summary>
         /// <param name="data">The payload to reverse</param>
-        /// <returns><paramref name="data"/> reversed in place</returns>
+        /// <returns><paramref name="data" /> reversed in place</returns>
         public static byte[] InPlaceReverse(this byte[] data)
         {
             if (data != null && data.Length > 1)
             {
-                var length = data.Length;
-                for (var n = 0; n < length / 2; ++n)
+                int length = data.Length;
+                for (var n = 0; n < length/2; ++n)
                 {
-                    var temp = data[length - n - 1];
+                    byte temp = data[length - n - 1];
                     data[length - n - 1] = data[n];
                     data[n] = temp;
                 }
