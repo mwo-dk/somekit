@@ -36,52 +36,52 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="..\..\DotNet Core\SomeKit.REST.DotnetCore\Extensions\HttpClientExtensions.cs">
+    <Compile Include="..\..\DotNet Core\SomeKit.REST\Extensions\HttpClientExtensions.cs">
       <Link>Extensions\HttpClientExtensions.cs</Link>
     </Compile>
-    <Compile Include="..\..\DotNet Core\SomeKit.REST.DotnetCore\Extensions\HttpRequestMessageExtensions.cs">
+    <Compile Include="..\..\DotNet Core\SomeKit.REST\Extensions\HttpRequestMessageExtensions.cs">
       <Link>Extensions\HttpRequestMessageExtensions.cs</Link>
     </Compile>
-    <Compile Include="..\..\DotNet Core\SomeKit.REST.DotnetCore\HttpClientFactory.cs">
+    <Compile Include="..\..\DotNet Core\SomeKit.REST\HttpClientFactory.cs">
       <Link>HttpClientFactory.cs</Link>
     </Compile>
-    <Compile Include="..\..\DotNet Core\SomeKit.REST.DotnetCore\HttpRequestHeader.cs">
+    <Compile Include="..\..\DotNet Core\SomeKit.REST\HttpRequestHeader.cs">
       <Link>HttpRequestHeader.cs</Link>
     </Compile>
-    <Compile Include="..\..\DotNet Core\SomeKit.REST.DotnetCore\HttpRequestHeaderCollection.cs">
+    <Compile Include="..\..\DotNet Core\SomeKit.REST\HttpRequestHeaderCollection.cs">
       <Link>HttpRequestHeaderCollection.cs</Link>
     </Compile>
-    <Compile Include="..\..\DotNet Core\SomeKit.REST.DotnetCore\HttpWindowsClientFactory.cs">
+    <Compile Include="..\..\DotNet Core\SomeKit.REST\HttpWindowsClientFactory.cs">
       <Link>HttpWindowsClientFactory.cs</Link>
     </Compile>
-    <Compile Include="..\..\DotNet Core\SomeKit.REST.DotnetCore\IHttpClientFactory.cs">
+    <Compile Include="..\..\DotNet Core\SomeKit.REST\IHttpClientFactory.cs">
       <Link>IHttpClientFactory.cs</Link>
     </Compile>
-    <Compile Include="..\..\DotNet Core\SomeKit.REST.DotnetCore\IHttpRequestHeader.cs">
+    <Compile Include="..\..\DotNet Core\SomeKit.REST\IHttpRequestHeader.cs">
       <Link>IHttpRequestHeader.cs</Link>
     </Compile>
-    <Compile Include="..\..\DotNet Core\SomeKit.REST.DotnetCore\IHttpRequestHeaderCollection.cs">
+    <Compile Include="..\..\DotNet Core\SomeKit.REST\IHttpRequestHeaderCollection.cs">
       <Link>IHttpRequestHeaderCollection.cs</Link>
     </Compile>
-    <Compile Include="..\..\DotNet Core\SomeKit.REST.DotnetCore\IPayloadDeserializer.cs">
+    <Compile Include="..\..\DotNet Core\SomeKit.REST\IPayloadDeserializer.cs">
       <Link>IPayloadDeserializer.cs</Link>
     </Compile>
-    <Compile Include="..\..\DotNet Core\SomeKit.REST.DotnetCore\IPayloadSerializer.cs">
+    <Compile Include="..\..\DotNet Core\SomeKit.REST\IPayloadSerializer.cs">
       <Link>IPayloadSerializer.cs</Link>
     </Compile>
-    <Compile Include="..\..\DotNet Core\SomeKit.REST.DotnetCore\IRestClient.cs">
+    <Compile Include="..\..\DotNet Core\SomeKit.REST\IRestClient.cs">
       <Link>IRestClient.cs</Link>
     </Compile>
-    <Compile Include="..\..\DotNet Core\SomeKit.REST.DotnetCore\RestClient.cs">
+    <Compile Include="..\..\DotNet Core\SomeKit.REST\RestClient.cs">
       <Link>RestClient.cs</Link>
     </Compile>
-    <Compile Include="..\..\DotNet Core\SomeKit.REST.DotnetCore\Serialization\Json\JsonPayloadDeserializer.cs">
+    <Compile Include="..\..\DotNet Core\SomeKit.REST\Serialization\Json\JsonPayloadDeserializer.cs">
       <Link>Serialization\Json\JsonPayloadDeserializer.cs</Link>
     </Compile>
-    <Compile Include="..\..\DotNet Core\SomeKit.REST.DotnetCore\Serialization\Json\JsonPayloadSerializer.cs">
+    <Compile Include="..\..\DotNet Core\SomeKit.REST\Serialization\Json\JsonPayloadSerializer.cs">
       <Link>Serialization\Json\JsonPayloadSerializer.cs</Link>
     </Compile>
-    <Compile Include="..\..\DotNet Core\SomeKit.REST.DotnetCore\WindowsRestClient.cs">
+    <Compile Include="..\..\DotNet Core\SomeKit.REST\WindowsRestClient.cs">
       <Link>WindowsRestClient.cs</Link>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
