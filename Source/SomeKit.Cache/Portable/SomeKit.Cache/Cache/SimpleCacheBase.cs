@@ -4,19 +4,29 @@ using System.Linq;
 
 namespace SomeKit.Cache.Cache
 {
+    /// <summary>
+    /// Implements <see cref="ICache{T}"/>. Implemented by utilizing a single container for the entire cache.
+    /// </summary>
+    /// <typeparam name="T">The type of element in the records in the cache</typeparam>
+    /// <typeparam name="CONTAINER">The type of container to hold the individual records</typeparam>
     public abstract class SimpleCacheBase<T, CONTAINER> : ICache<T>
         where T : IHasKey<int>
         where CONTAINER : IContainer<Record<T>>, new()
     {
         private readonly bool _shouldLock;
         private readonly CONTAINER _container = new CONTAINER();
-
+        
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="shouldLock">Flag telling whether to lock or not on each access</param>
         protected SimpleCacheBase(bool shouldLock)
         {
             _shouldLock = shouldLock;
         }
 
         #region Simple CRUD
+        ///<inheritdoc/>
         public IQueryable<T> GetAll()
         {
             Func<IQueryable<T>> query = () =>
@@ -36,7 +46,7 @@ namespace SomeKit.Cache.Cache
             }
             else return query();
         }
-
+        ///<inheritdoc/>
         public bool TryGet(int key, out T value)
         {
             if (_shouldLock)
@@ -66,6 +76,7 @@ namespace SomeKit.Cache.Cache
                 return hasItem;
             }
         }
+        ///<inheritdoc/>
         public T Get(int key)
         {
             Func<T> query = () =>
@@ -90,6 +101,7 @@ namespace SomeKit.Cache.Cache
             }
             else return query();
         }
+        ///<inheritdoc/>
         public void Upsert(T value)
         {
             Action<T> action = x =>
@@ -115,6 +127,7 @@ namespace SomeKit.Cache.Cache
             }
             else action(value);
         }
+        ///<inheritdoc/>
         public void Delete(int key)
         {
             Action<int> action = x =>
@@ -138,7 +151,7 @@ namespace SomeKit.Cache.Cache
             }
             else action(key);
         }
-
+        ///<inheritdoc/>
         public void Clear()
         {
             Action action = () => _container.Clear();
@@ -160,6 +173,7 @@ namespace SomeKit.Cache.Cache
         #endregion
 
         #region Advanced CRUD
+        ///<inheritdoc/>
         public IQueryable<T> Query(Predicate<T> filter)
         {
             Func<IQueryable<T>> query = () =>
@@ -179,6 +193,7 @@ namespace SomeKit.Cache.Cache
             }
             else return query();
         }
+        ///<inheritdoc/>
         public IQueryable<U> Query<U>(Predicate<T> filter, Func<T, U> transform)
         {
             Func<IQueryable<U>> query = () =>
@@ -198,7 +213,7 @@ namespace SomeKit.Cache.Cache
             }
             else return query();
         }
-
+        ///<inheritdoc/>
         public void BulkUpsert(IEnumerable<T> values)
         {
             Action<IEnumerable<T>> action = x =>
@@ -227,7 +242,7 @@ namespace SomeKit.Cache.Cache
             }
             else action(values);
         }
-
+        ///<inheritdoc/>
         public void BulkDelete(IEnumerable<int> keys)
         {
             Action<IEnumerable<int>> action = x =>
@@ -252,6 +267,7 @@ namespace SomeKit.Cache.Cache
             }
             else action(keys);
         }
+        ///<inheritdoc/>
         public void Modify(Action<T> handler, Predicate<T> filter = null)
         {
             Action action;
@@ -283,11 +299,15 @@ namespace SomeKit.Cache.Cache
             else action();
         }
         #endregion
-
+        /// <summary>
+        /// Virtual (default empty) method utlized to provide locking.
+        /// </summary>
         protected virtual void StartLock()
         {
         }
-
+        /// <summary>
+        /// Virtual (default empty) method utilized to provide lock release
+        /// </summary>
         protected virtual void EndLock()
         {
         }

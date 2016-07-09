@@ -1,5 +1,10 @@
 ﻿namespace SomeKit.Cache.Cache
 {
+    /// <summary>
+    /// Represents a partitioned cache
+    /// </summary>
+    /// <typeparam name="T">The type of elements in the cache</typeparam>
+    /// <typeparam name="CONTAINER">The internel container for each partition</typeparam>
     public abstract class PartitionedCacheBase<T, CONTAINER> /*: ICache<T>*/
         where T : IHasKey<int>
         where CONTAINER : IContainer<Record<T>>, new()

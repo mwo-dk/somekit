@@ -2,12 +2,17 @@
 
 namespace SomeKit.Cache.Container
 {
+    /// <summary>
+    /// Implements <see cref="IContainer{T}"/> via <see cref="ContainerBase{T}"/> utilizing basic arrays
+    /// </summary>
+    /// <typeparam name="T">The type of elements in the container</typeparam>
     public sealed class ArrayContainer<T> :
         ContainerBase<T>
     {
         private T[] _data;
+        ///<inheritdoc/>
         public override int Size => _data?.Length ?? 0;
-
+        ///<inheritdoc/>
         public override bool TryGet(int position, out T value)
         {
             if (position < 0)
@@ -18,7 +23,7 @@ namespace SomeKit.Cache.Container
             value = _data[position];
             return true;
         }
-
+        ///<inheritdoc/>
         public override void Set(int position, T value)
         {
             if (position < 0)
@@ -29,7 +34,7 @@ namespace SomeKit.Cache.Container
                 Array.Resize(ref _data, GetNewSize(position));
             _data[position] = value;
         }
-
+        ///<inheritdoc/>
         public override bool TryRemove(int position)
         {
             if (position < 0)
@@ -39,7 +44,7 @@ namespace SomeKit.Cache.Container
             _data[position] = default(T);
             return true;
         }
-
+        ///<inheritdoc/>
         public override void Clear()
         {
             _data = null;

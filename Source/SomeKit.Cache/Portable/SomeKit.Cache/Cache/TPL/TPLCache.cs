@@ -1,5 +1,9 @@
 ﻿namespace SomeKit.Cache.Cache.TPL
 {
+    /// <summary>
+    /// Cache implemented utilizing TPL
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public sealed class TPLCache<T> /*: ICache<T>*/
         where T : IHasKey<int>
     {
