@@ -36,52 +36,52 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="..\..\DotNet Core\SomeKit %28.Net Core%29\Extensions\HttpClientExtensions.cs">
+    <Compile Include="..\..\DotNet Core\SomeKit.DotnetCore\Extensions\HttpClientExtensions.cs">
       <Link>Extensions\HttpClientExtensions.cs</Link>
     </Compile>
-    <Compile Include="..\..\DotNet Core\SomeKit %28.Net Core%29\Extensions\HttpRequestMessageExtensions.cs">
+    <Compile Include="..\..\DotNet Core\SomeKit.DotnetCore\Extensions\HttpRequestMessageExtensions.cs">
       <Link>Extensions\HttpRequestMessageExtensions.cs</Link>
     </Compile>
-    <Compile Include="..\..\DotNet Core\SomeKit %28.Net Core%29\HttpClientFactory.cs">
+    <Compile Include="..\..\DotNet Core\SomeKit.DotnetCore\HttpClientFactory.cs">
       <Link>HttpClientFactory.cs</Link>
     </Compile>
-    <Compile Include="..\..\DotNet Core\SomeKit %28.Net Core%29\HttpRequestHeader.cs">
+    <Compile Include="..\..\DotNet Core\SomeKit.DotnetCore\HttpRequestHeader.cs">
       <Link>HttpRequestHeader.cs</Link>
     </Compile>
-    <Compile Include="..\..\DotNet Core\SomeKit %28.Net Core%29\HttpRequestHeaderCollection.cs">
+    <Compile Include="..\..\DotNet Core\SomeKit.DotnetCore\HttpRequestHeaderCollection.cs">
       <Link>HttpRequestHeaderCollection.cs</Link>
     </Compile>
-    <Compile Include="..\..\DotNet Core\SomeKit %28.Net Core%29\HttpWindowsClientFactory.cs">
+    <Compile Include="..\..\DotNet Core\SomeKit.DotnetCore\HttpWindowsClientFactory.cs">
       <Link>HttpWindowsClientFactory.cs</Link>
     </Compile>
-    <Compile Include="..\..\DotNet Core\SomeKit %28.Net Core%29\IHttpClientFactory.cs">
+    <Compile Include="..\..\DotNet Core\SomeKit.DotnetCore\IHttpClientFactory.cs">
       <Link>IHttpClientFactory.cs</Link>
     </Compile>
-    <Compile Include="..\..\DotNet Core\SomeKit %28.Net Core%29\IHttpRequestHeader.cs">
+    <Compile Include="..\..\DotNet Core\SomeKit.DotnetCore\IHttpRequestHeader.cs">
       <Link>IHttpRequestHeader.cs</Link>
     </Compile>
-    <Compile Include="..\..\DotNet Core\SomeKit %28.Net Core%29\IHttpRequestHeaderCollection.cs">
+    <Compile Include="..\..\DotNet Core\SomeKit.DotnetCore\IHttpRequestHeaderCollection.cs">
       <Link>IHttpRequestHeaderCollection.cs</Link>
     </Compile>
-    <Compile Include="..\..\DotNet Core\SomeKit %28.Net Core%29\IPayloadDeserializer.cs">
+    <Compile Include="..\..\DotNet Core\SomeKit.DotnetCore\IPayloadDeserializer.cs">
       <Link>IPayloadDeserializer.cs</Link>
     </Compile>
-    <Compile Include="..\..\DotNet Core\SomeKit %28.Net Core%29\IPayloadSerializer.cs">
+    <Compile Include="..\..\DotNet Core\SomeKit.DotnetCore\IPayloadSerializer.cs">
       <Link>IPayloadSerializer.cs</Link>
     </Compile>
-    <Compile Include="..\..\DotNet Core\SomeKit %28.Net Core%29\IRestClient.cs">
+    <Compile Include="..\..\DotNet Core\SomeKit.DotnetCore\IRestClient.cs">
       <Link>IRestClient.cs</Link>
     </Compile>
-    <Compile Include="..\..\DotNet Core\SomeKit %28.Net Core%29\RestClient.cs">
+    <Compile Include="..\..\DotNet Core\SomeKit.DotnetCore\RestClient.cs">
       <Link>RestClient.cs</Link>
     </Compile>
-    <Compile Include="..\..\DotNet Core\SomeKit %28.Net Core%29\Serialization\Json\JsonPayloadDeserializer.cs">
+    <Compile Include="..\..\DotNet Core\SomeKit.DotnetCore\Serialization\Json\JsonPayloadDeserializer.cs">
       <Link>Serialization\Json\JsonPayloadDeserializer.cs</Link>
     </Compile>
-    <Compile Include="..\..\DotNet Core\SomeKit %28.Net Core%29\Serialization\Json\JsonPayloadSerializer.cs">
+    <Compile Include="..\..\DotNet Core\SomeKit.DotnetCore\Serialization\Json\JsonPayloadSerializer.cs">
       <Link>Serialization\Json\JsonPayloadSerializer.cs</Link>
     </Compile>
-    <Compile Include="..\..\DotNet Core\SomeKit %28.Net Core%29\WindowsRestClient.cs">
+    <Compile Include="..\..\DotNet Core\SomeKit.DotnetCore\WindowsRestClient.cs">
       <Link>WindowsRestClient.cs</Link>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
