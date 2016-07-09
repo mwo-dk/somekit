@@ -61,4 +61,4 @@ $revision = @{ $true = $env:APPVEYOR_BUILD_NUMBER; $false = 1 }[$env:APPVEYOR_BU
 $revision = "{0:D4}" -f [convert]::ToInt32($revision, 10)
 Write-Output $revision
 #exec { & dotnet test .\test\YOUR_TEST_PROJECT_NAME -c Release }
-exec { & dotnet pack ".\Source\SomeKit\DotNet Core\SomeKit.DotnetCore" -c Release -o .\artifacts --version-suffix=$revision }  
+exec { & dotnet pack ".\Source\SomeKit.REST\DotNet Core\SomeKit.DotnetCore" -c Release -o .\artifacts --version-suffix=$revision }  

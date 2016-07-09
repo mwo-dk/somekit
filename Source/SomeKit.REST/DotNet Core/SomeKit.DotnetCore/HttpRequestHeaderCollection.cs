@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
-namespace SomeKit
+namespace SomeKit.REST
 {
     ///<inheritdoc/>
     public sealed class HttpRequestHeaderCollection : IHttpRequestHeaderCollection

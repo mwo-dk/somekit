@@ -1,4 +1,4 @@
-﻿namespace SomeKit
+﻿namespace SomeKit.REST
 {
     /// <summary>
     /// Extends <see cref="RestClient"/> to utilize Windows Authentication

@@ -4,7 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 // ReSharper disable InconsistentNaming
 
-namespace SomeKit
+namespace SomeKit.REST
 {
     /// <summary>
     /// REST client

@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace SomeKit.Serialization.Json
+namespace SomeKit.REST.Serialization.Json
 {
     /// <summary>
     /// Implements <see cref="IPayloadSerializer"/> for Json

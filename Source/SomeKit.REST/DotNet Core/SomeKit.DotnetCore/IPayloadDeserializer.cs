@@ -1,4 +1,4 @@
-﻿namespace SomeKit
+﻿namespace SomeKit.REST
 {
     /// <summary>
     /// Last in chain deserializer. 

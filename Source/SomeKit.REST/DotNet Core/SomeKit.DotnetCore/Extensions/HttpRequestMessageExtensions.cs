@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Net.Http;
 
-namespace SomeKit.Extensions
+namespace SomeKit.REST.Extensions
 {
     /// <summary>
     /// Extension methods for <see cref="HttpRequestMessage"/>

@@ -3,7 +3,7 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace SomeKit.Extensions
+namespace SomeKit.REST.Extensions
 {
     /// <summary>
     /// Extension methods for <see cref="HttpClient"/>

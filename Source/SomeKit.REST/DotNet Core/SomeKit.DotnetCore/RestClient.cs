@@ -3,10 +3,10 @@ using System.Net.Http;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using SomeKit.Extensions;
-using SomeKit.Serialization.Json;
+using SomeKit.REST.Extensions;
+using SomeKit.REST.Serialization.Json;
 
-namespace SomeKit
+namespace SomeKit.REST
 {
     /// <summary>
     /// Provides implementatin of <see cref="IRestClient"/>

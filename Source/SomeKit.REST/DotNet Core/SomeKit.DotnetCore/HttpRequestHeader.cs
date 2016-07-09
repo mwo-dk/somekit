@@ -1,4 +1,4 @@
-﻿namespace SomeKit
+﻿namespace SomeKit.REST
 {
     /// <inheritdoc/>
     public sealed class HttpRequestHeader : IHttpRequestHeader

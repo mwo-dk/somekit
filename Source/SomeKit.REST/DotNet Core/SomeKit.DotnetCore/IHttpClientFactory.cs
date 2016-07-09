@@ -1,6 +1,6 @@
 ﻿using System.Net.Http;
 
-namespace SomeKit
+namespace SomeKit.REST
 {
     /// <summary>
     /// Factory for creating <see cref="HttpClient"/>s.
