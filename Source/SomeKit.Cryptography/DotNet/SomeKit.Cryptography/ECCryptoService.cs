@@ -5,20 +5,21 @@ using System.Security.Cryptography;
 namespace SomeKit.Cryptography
 {
     /// <summary>
-    /// Implements <see cref="ICryptoService"/>
+    ///     Implements <see cref="ICryptoService" />
     /// </summary>
-    public sealed class ECCryptoService : ICryptoService
+    public sealed class EcCryptoService : ICryptoService
     {
+        private byte[] _iv;
+        private byte[] _key;
+        private byte[] _peerPublicKey;
         private byte[] _privateKey;
         private byte[] _publicKey;
-        private byte[] _peerPublicKey;
-        private byte[] _key;
 
         /// <summary>
-        /// Constructor
+        ///     Constructor
         /// </summary>
         /// <param name="generateKey">Flag telling wether to generate keys</param>
-        public ECCryptoService(bool generateKey = true)
+        public EcCryptoService(bool generateKey = true)
         {
             if (generateKey)
             {
@@ -29,7 +30,7 @@ namespace SomeKit.Cryptography
         }
 
         /// <summary>
-        /// The private key
+        ///     The private key
         /// </summary>
         public byte[] PrivateKey
         {
@@ -44,7 +45,7 @@ namespace SomeKit.Cryptography
         }
 
         /// <summary>
-        /// The public key
+        ///     The public key
         /// </summary>
         public byte[] PublicKey
         {
@@ -58,7 +59,7 @@ namespace SomeKit.Cryptography
         }
 
         /// <summary>
-        /// The public key of the peer
+        ///     The public key of the peer
         /// </summary>
         public byte[] PeerPublicKey
         {
@@ -71,7 +72,7 @@ namespace SomeKit.Cryptography
             }
         }
 
-        ///<inheritdoc/>
+        /// <inheritdoc />
         public byte[] Encrypt(byte[] data)
         {
             using (Aes aes = new AesCryptoServiceProvider())
@@ -79,8 +80,8 @@ namespace SomeKit.Cryptography
                 aes.Key = _key;
 
                 // Encrypt the message 
-                using (MemoryStream ciphertext = new MemoryStream())
-                using (CryptoStream cs = new CryptoStream(ciphertext, aes.CreateEncryptor(), CryptoStreamMode.Write))
+                using (var ciphertext = new MemoryStream())
+                using (var cs = new CryptoStream(ciphertext, aes.CreateEncryptor(), CryptoStreamMode.Write))
                 {
                     cs.Write(data, 0, data.Length);
                     cs.Close();
@@ -90,7 +91,7 @@ namespace SomeKit.Cryptography
             }
         }
 
-        ///<inheritdoc/>
+        /// <inheritdoc />
         public byte[] Decrypt(byte[] data)
         {
             using (Aes aes = new AesCryptoServiceProvider())
@@ -98,9 +99,9 @@ namespace SomeKit.Cryptography
                 aes.Key = _key;
                 aes.IV = _iv;
                 // Decrypt the message 
-                using (MemoryStream plaintext = new MemoryStream())
+                using (var plaintext = new MemoryStream())
                 {
-                    using (CryptoStream cs = new CryptoStream(plaintext, aes.CreateDecryptor(), CryptoStreamMode.Write))
+                    using (var cs = new CryptoStream(plaintext, aes.CreateDecryptor(), CryptoStreamMode.Write))
                     {
                         cs.Write(data, 0, data.Length);
                         cs.Close();
@@ -110,13 +111,12 @@ namespace SomeKit.Cryptography
             }
         }
 
-        private byte[] _iv;
         /// <summary>
-        /// Sets the initialization vector
+        ///     Sets the initialization vector
         /// </summary>
         /// <param name="iv">The new initialization vector</param>
         /// <returns>This service</returns>
-        public ECCryptoService WithInitializationVector(byte[] iv)
+        public EcCryptoService WithInitializationVector(byte[] iv)
         {
             if (iv == null)
                 throw new ArgumentNullException(nameof(iv));
@@ -125,11 +125,11 @@ namespace SomeKit.Cryptography
             return this;
         }
 
-        ///<inheritdoc/>
+        /// <inheritdoc />
         public static CngKey GenerateExportableKey()
         {
             return CngKey.Create(CngAlgorithm.ECDiffieHellmanP256, null,
-                new CngKeyCreationParameters { ExportPolicy = CngExportPolicies.AllowPlaintextArchiving });
+                new CngKeyCreationParameters {ExportPolicy = CngExportPolicies.AllowPlaintextArchiving});
         }
 
         private void AttachToPeer()
