@@ -19,7 +19,7 @@ namespace SomeKit.REST.Extensions
             client.RequestHeaders.Add(new HttpRequestHeader
             {
                 Name = "Authorization",
-                Value = "Basc " + Convert.ToBase64String(Encoding.UTF8.GetBytes($"{user}:{password}"))
+                Value = "Basic " + Convert.ToBase64String(Encoding.UTF8.GetBytes($"{user}:{password}"))
             });
 
             return client;
