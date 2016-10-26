@@ -135,9 +135,7 @@ namespace SomeKit.Cryptography
         private void AttachToPeer()
         {
             using (var ecc = GetAlgoritm(_privateKey))
-            {
                 _key = ecc.DeriveKeyMaterial(CngKey.Import(_peerPublicKey, CngKeyBlobFormat.EccPublicBlob));
-            }
         }
 
         private static ECDiffieHellmanCng GetAlgoritm(byte[] privateKey = null)
